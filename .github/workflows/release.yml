@@ -15,17 +15,17 @@ jobs:
         include:
           - os: ubuntu-latest
             file: Dockerfile
-            tag: ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64
+            tag: cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64
           - os: windows-latest
             file: Dockerfile
-            tag: ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+            tag: cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: cyberbuff
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Docker Build
         run: |
@@ -44,17 +44,17 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: cyberbuff
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Docker Manifest
         run: |
           docker manifest create cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }} \
-            --amend ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64 \
-            --amend ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+            --amend cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64 \
+            --amend cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
       - name: Docker Annotate
         run: |
           docker manifest annotate --os windows --arch amd64 \
-            ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }} ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+            cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }} cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
       - name: Docker Push
         run: |
-          docker manifest push ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:${{ github.event.release.tag_name }}
+          docker manifest push cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}
