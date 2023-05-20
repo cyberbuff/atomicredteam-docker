@@ -1,9 +1,8 @@
 name: build-and-push-image
 
 on:
-  push:
-    branches:
-      - "main"
+  release:
+    types: [published]
 
 jobs:
   build:
