@@ -1,8 +1,8 @@
-name: Publish Workflow
+name: Publish Docker containers
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - main
 
 jobs:
   build-publish-containers:
