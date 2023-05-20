@@ -24,7 +24,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: amd64
-          file: ./Dockerfile
+          file: ./amd64/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:amd64
 
@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: arm64
-          file: ./Dockerfile
+          file: ./arm64/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/invoke-atomicredteam:arm64
