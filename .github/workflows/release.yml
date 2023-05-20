@@ -30,10 +30,11 @@ jobs:
       - name: Docker Build
         run: |
           docker build -f ${{ matrix.file }} -t ${{ matrix.tag }} .
+          docker build -f ${{ matrix.file }} -t latest .
       - name: Docker Push
         run: |
           docker push ${{ matrix.tag }}
-
+          docker push cyberbuff/invoke-atomicredteam:latest
   publish-manfiest:
     name: Publish Manifest
     runs-on: ubuntu-latest
@@ -48,6 +49,9 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Docker Manifest
         run: |
+          docker manifest create cyberbuff/invoke-atomicredteam:latest \
+            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
+            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
           docker manifest create cyberbuff/invoke-atomicredteam:${{ github.sha }} \
             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
