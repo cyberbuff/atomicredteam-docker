@@ -12,13 +12,12 @@ Note: This repo is a work in progress.
 
 | Platforms   |              Image Name              |
 | :---------- | :----------------------------------: |
-| linux/amd64 | cyberbuff/invoke-atomicredteam:amd64 |
-| linux/arm64 | cyberbuff/invoke-atomicredteam:arm64 |
+| linux/amd64 | `docker pull cyberbuff/invoke-atomicredteam:amd64` |
+| linux/arm64 | `docker pull cyberbuff/invoke-atomicredteam:arm64` |
 
 ### Work in Progress
 
 - windows/amd64
-- windows/arm64
 
 
 ## How it works:
