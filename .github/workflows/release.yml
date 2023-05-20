@@ -16,11 +16,11 @@ jobs:
           - os: ubuntu-latest
             file: Dockerfile
             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64
-            latest: cyberbuff/invoke-atomicredteam:latest
+            latest: cyberbuff/invoke-atomicredteam:latest-linux-amd64
           - os: windows-latest
             file: Dockerfile
             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-            latest: cyberbuff/invoke-atomicredteam:latest
+            latest: cyberbuff/invoke-atomicredteam:latest-windows-amd64
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -60,7 +60,10 @@ jobs:
       - name: Docker Annotate
         run: |
           docker manifest annotate --os windows --arch amd64 \
+            cyberbuff/invoke-atomicredteam:latest cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+          docker manifest annotate --os windows --arch amd64 \
             cyberbuff/invoke-atomicredteam:${{ github.sha }} cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
       - name: Docker Push
         run: |
           docker manifest push cyberbuff/invoke-atomicredteam:${{ github.sha }}
+          docker manifest push cyberbuff/invoke-atomicredteam:latest
