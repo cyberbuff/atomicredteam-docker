@@ -24,3 +24,14 @@ Note: This repo is a work in progress.
 ## How it works:
 
 Microsoft publishes [powershell docker images](https://hub.docker.com/_/microsoft-powershell) almost for all of the platforms. We can use this to pull down a minimal base image with powershell and add the necessary requirements that's needed for `atomic-red-team`.
+
+
+# Building locally
+
+Run the following command to build and run the image locally.
+
+```sh
+platform=arm64
+docker build -t cyberbuff/invoke-atomicredteam:$platform $platform
+docker run -it cyberbuff/invoke-atomicredteam:$platform
+```
