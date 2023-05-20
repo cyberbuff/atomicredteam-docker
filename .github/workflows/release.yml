@@ -16,9 +16,11 @@ jobs:
           - os: ubuntu-latest
             file: Dockerfile
             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64
+            latest: cyberbuff/invoke-atomicredteam:latest
           - os: windows-latest
             file: Dockerfile
             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+            latest: cyberbuff/invoke-atomicredteam:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,11 +32,11 @@ jobs:
       - name: Docker Build
         run: |
           docker build -f ${{ matrix.file }} -t ${{ matrix.tag }} .
-          docker build -f ${{ matrix.file }} -t latest .
+          docker build -f ${{ matrix.file }} -t ${{ matrix.latest }} .
       - name: Docker Push
         run: |
           docker push ${{ matrix.tag }}
-          docker push cyberbuff/invoke-atomicredteam:latest
+          docker push ${{ matrix.latest }}
   publish-manfiest:
     name: Publish Manifest
     runs-on: ubuntu-latest
