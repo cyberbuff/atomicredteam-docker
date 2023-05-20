@@ -15,10 +15,10 @@ jobs:
         include:
           - os: ubuntu-latest
             file: Dockerfile
-            tag: cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64
+            tag: cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}-linux-amd64
           - os: windows-latest
             file: Dockerfile
-            tag: cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+            tag: cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}-windows-amd64
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,13 +48,13 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Docker Manifest
         run: |
-          docker manifest create cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }} \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-linux-amd64 \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+          docker manifest create cyberbuff/invoke-atomicredteam:${{ github.event.push.after }} \
+            --amend cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}-linux-amd64 \
+            --amend cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}-windows-amd64
       - name: Docker Annotate
         run: |
           docker manifest annotate --os windows --arch amd64 \
-            cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }} cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}-windows-amd64
+            cyberbuff/invoke-atomicredteam:${{ github.event.push.after }} cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}-windows-amd64
       - name: Docker Push
         run: |
-          docker manifest push cyberbuff/invoke-atomicredteam:${{ github.event.release.tag_name }}
+          docker manifest push cyberbuff/invoke-atomicredteam:${{ github.event.push.after }}
