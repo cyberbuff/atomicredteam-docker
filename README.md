@@ -5,9 +5,8 @@ This repo builds and pushes docker images for `invoke-atomicredteam`. Some of th
 - Users can quickly pull down this image and test the functionality of `atomic-red-team` and `invoke-atomicredteam`.
 - This can also be used to run periodic tasks (Kubernetes Cron Jobs/ CI-CD) and download the execution logs for continuous detection and validation.
 
-```
-Note: This repo is a work in progress.
-```
+Note: This repo is a work in progress. If you have any issues, feel free to raise an issue [here](https://github.com/cyberbuff/atomicredteam-docker/issues/new?labels=bug)
+
 ### Supported Platforms and Architectures:
 
 | Platforms   |              Image Name              |
@@ -16,9 +15,8 @@ Note: This repo is a work in progress.
 | linux/amd64 | `docker run -it cyberbuff/invoke-atomicredteam:latest` |
 | linux/arm64 | `docker run -it cyberbuff/invoke-atomicredteam:arm64` |
 
-```
-Note: linux/arm64 tested on M1 Macbook Air, windows/amd64 and linux/amd64 are tested on a Windows 11 machine. If you have any issues, feel free to raise an issue [here](https://github.com/cyberbuff/atomicredteam-docker/issues/new?labels=bug)
-```
+
+Note: `linux/arm64` tested on M1 Macbook Air, `windows/amd64` and `linux/amd64` are tested on a Windows 11 machine. 
 
 ## How it works:
 
