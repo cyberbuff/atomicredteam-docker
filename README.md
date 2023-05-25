@@ -12,9 +12,9 @@ Note: This repo is a work in progress.
 
 | Platforms   |              Image Name              |
 | :---------- | :----------------------------------: |
-| windows/amd64 | `docker pull cyberbuff/invoke-atomicredteam:latest` |
-| linux/amd64 | `docker pull cyberbuff/invoke-atomicredteam:latest` |
-| linux/arm64 | `docker pull cyberbuff/invoke-atomicredteam:arm64` |
+| windows/amd64 | `docker run -it cyberbuff/invoke-atomicredteam:latest` |
+| linux/amd64 | `docker run -it cyberbuff/invoke-atomicredteam:latest` |
+| linux/arm64 | `docker run -it cyberbuff/invoke-atomicredteam:arm64` |
 
 ```
 Note: linux/arm64 tested on M1 Macbook Air, windows/amd64 and linux/amd64 are tested on a Windows 11 machine. If you have any issues running on your machine, feel free to create a Github Issue.
