@@ -1,0 +1,26 @@
+name: Publish Docker containers
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-publish-containers:
+    name: Build and Publish Containers
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Install Invoke-AtomicRedTeam and download atomics
+        shell: pwsh
+        run: |
+          IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1' -UseBasicParsing);
+          Install-AtomicRedTeam -getAtomics -Force
+      - name: Perform atomic tests on a schedule
+        shell: pwsh
+        run: |
+          Invoke-AtomicTest T1070.002 -GetPreReqs
+          Invoke-AtomicTest T1070.002 
+          Invoke-AtomicTest T1070.002 -Cleanup
