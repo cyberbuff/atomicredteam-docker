@@ -1,4 +1,4 @@
-name: Publish Docker containers
+name: Run atomics
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-publish-containers:
-    name: Build and Publish Containers
+    name: Run atomics
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 3
