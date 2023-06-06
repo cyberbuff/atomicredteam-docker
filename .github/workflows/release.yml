@@ -1,69 +1,69 @@
-name: Publish Docker containers
-on:
-  push:
-    branches:
-      - main
+# name: Publish Docker containers
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build-publish-containers:
-    name: Build and Publish Containers
-    runs-on: ${{ matrix.os }}
-    strategy:
-      max-parallel: 3
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            file: Dockerfile
-            tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64
-            latest: cyberbuff/invoke-atomicredteam:latest-linux-amd64
-          - os: windows-latest
-            file: Dockerfile
-            tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-            latest: cyberbuff/invoke-atomicredteam:latest-windows-amd64
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: cyberbuff
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Docker Build
-        run: |
-          docker build -f ${{ matrix.file }} -t ${{ matrix.tag }} .
-          docker build -f ${{ matrix.file }} -t ${{ matrix.latest }} .
-      - name: Docker Push
-        run: |
-          docker push ${{ matrix.tag }}
-          docker push ${{ matrix.latest }}
-  publish-manfiest:
-    name: Publish Manifest
-    runs-on: ubuntu-latest
-    needs: build-publish-containers
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: cyberbuff
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Docker Manifest
-        run: |
-          docker manifest create cyberbuff/invoke-atomicredteam:latest \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-          docker manifest create cyberbuff/invoke-atomicredteam:${{ github.sha }} \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
-            --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-      - name: Docker Annotate
-        run: |
-          docker manifest annotate --os windows --arch amd64 \
-            cyberbuff/invoke-atomicredteam:latest cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-          docker manifest annotate --os windows --arch amd64 \
-            cyberbuff/invoke-atomicredteam:${{ github.sha }} cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
-      - name: Docker Push
-        run: |
-          docker manifest push cyberbuff/invoke-atomicredteam:${{ github.sha }}
-          docker manifest push cyberbuff/invoke-atomicredteam:latest
+# jobs:
+#   build-publish-containers:
+#     name: Build and Publish Containers
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       max-parallel: 3
+#       matrix:
+#         os: [ubuntu-latest, windows-latest]
+#         include:
+#           - os: ubuntu-latest
+#             file: Dockerfile
+#             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64
+#             latest: cyberbuff/invoke-atomicredteam:latest-linux-amd64
+#           - os: windows-latest
+#             file: Dockerfile
+#             tag: cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+#             latest: cyberbuff/invoke-atomicredteam:latest-windows-amd64
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v2
+#         with:
+#           username: cyberbuff
+#           password: ${{ secrets.DOCKER_TOKEN }}
+#       - name: Docker Build
+#         run: |
+#           docker build -f ${{ matrix.file }} -t ${{ matrix.tag }} .
+#           docker build -f ${{ matrix.file }} -t ${{ matrix.latest }} .
+#       - name: Docker Push
+#         run: |
+#           docker push ${{ matrix.tag }}
+#           docker push ${{ matrix.latest }}
+#   publish-manfiest:
+#     name: Publish Manifest
+#     runs-on: ubuntu-latest
+#     needs: build-publish-containers
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v2
+#         with:
+#           username: cyberbuff
+#           password: ${{ secrets.DOCKER_TOKEN }}
+#       - name: Docker Manifest
+#         run: |
+#           docker manifest create cyberbuff/invoke-atomicredteam:latest \
+#             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
+#             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+#           docker manifest create cyberbuff/invoke-atomicredteam:${{ github.sha }} \
+#             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-linux-amd64 \
+#             --amend cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+#       - name: Docker Annotate
+#         run: |
+#           docker manifest annotate --os windows --arch amd64 \
+#             cyberbuff/invoke-atomicredteam:latest cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+#           docker manifest annotate --os windows --arch amd64 \
+#             cyberbuff/invoke-atomicredteam:${{ github.sha }} cyberbuff/invoke-atomicredteam:${{ github.sha }}-windows-amd64
+#       - name: Docker Push
+#         run: |
+#           docker manifest push cyberbuff/invoke-atomicredteam:${{ github.sha }}
+#           docker manifest push cyberbuff/invoke-atomicredteam:latest
