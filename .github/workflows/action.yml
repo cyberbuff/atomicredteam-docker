@@ -16,7 +16,7 @@ jobs:
       - name: Install Invoke-AtomicRedTeam and download atomics
         shell: pwsh
         run: |
-          Install-Module -Name invoke-atomicredteam,powershell-yaml -Scope CurrentUser
+          Install-Module -Name invoke-atomicredteam,powershell-yaml -Scope CurrentUser -SkipPublisherCheck -Force
       - name: Perform atomic tests on a schedule
         shell: pwsh
         run: |
