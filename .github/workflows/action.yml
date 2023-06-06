@@ -22,6 +22,6 @@ jobs:
       - name: Perform atomic tests on a schedule
         shell: pwsh
         run: |
-          Invoke-AtomicTest T1070.002 -GetPreReqs
-          Invoke-AtomicTest T1070.002 
-          Invoke-AtomicTest T1070.002 -Cleanup
+          Invoke-AtomicTest T1070.003 -GetPreReqs
+          Invoke-AtomicTest T1070.003
+          Invoke-AtomicTest T1070.003 -Cleanup
