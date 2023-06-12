@@ -25,6 +25,7 @@ jobs:
           Invoke-AtomicTest T1070.003 -GetPreReqs
           Invoke-AtomicTest T1070.003
           Invoke-AtomicTest T1070.003 -Cleanup
+          New-Item -ItemType Directory -Path "C:\logs"
           Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" | Export-Clixml -Path C:\logs\powershell.xml
           Get-WinEvent -LogName "System" | Export-Clixml -Path C:\logs\system.xml
           Get-WinEvent -LogName "Security" | Export-Clixml -Path C:\logs\security.xml
